@@ -11,6 +11,10 @@ from app.utils.LogHandler import log
 info=Blueprint('info',__name__)
 
 
+def send_alert():
+    log.info("发送告警成功")
+
+
 @info.route('/')
 def get_info():
     log.info("加载配置项成功")

@@ -8,6 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flask_migrate import Migrate
 
+from app.api.rep_info import send_alert
 from app.config import config
 from app.extension import db
 from app.models import CatModel
@@ -30,7 +31,7 @@ def create_app(DevelopmentConfig=None):
     # 创建一个后台调度器
     scheduler = BackgroundScheduler(timezone="Asia/Shanghai")
     # 添加一个每隔20秒执行一次的定时任务
-    # scheduler.add_job(func=send_alert, trigger="interval", seconds=20)
+    scheduler.add_job(func=send_alert, trigger="interval", seconds=20)
     # 添加一个每天早上9点执行的定时任务
     scheduler.add_job(func=get_heimao, trigger=CronTrigger(minute='*/10'))
     # 启动调度器

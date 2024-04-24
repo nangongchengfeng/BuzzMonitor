@@ -4,7 +4,6 @@
 # @Email   : 1794748404@qq.com
 # @File    : CatModels.py
 # @Software: PyCharm
-import uuid
 
 from app.extension import db
 
@@ -29,3 +28,20 @@ class CatModels(db.Model):
 
     def __repr__(self):
         return f"<Complaint {self.id}>"
+    def to_json(self):
+        return {
+            'id': self.id,
+            'sn': self.sn,
+            'source': self.source,
+            'keyword': self.keyword,
+            'url': self.url,
+            'title': self.title,
+            'content': self.content,
+            'complaint_claim': self.complaint_claim,
+            'complaint_obj': self.complaint_obj,
+            'author': self.author,
+            'exist_date': self.exist_date.strftime('%Y-%m-%d %H:%M:%S') if self.exist_date else None,
+            'time_stamp': self.time_stamp,
+            'query_date': self.query_date.strftime('%Y-%m-%d %H:%M:%S') if self.query_date else None,
+            'analy': self.analy
+        }

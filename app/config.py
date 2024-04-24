@@ -8,7 +8,9 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-KEYWORDS = ['6330679669', '1004604']
+KEYWORDS = ['1003626', '1003609']
+Ding_URl = "https://oapi.dingtalk.com/robot/send?access_token=xxxx"
+Ding_SCRET= "xxxx"
 
 # base configuration
 class Config:

@@ -9,6 +9,7 @@ import sys
 
 
 from app import create_app
+from app.utils.LogHandler import log
 
 # 默认为开发环境，按需求修改
 config_name = 'development'
@@ -24,4 +25,5 @@ if __name__ == '__main__':
     # 将项目目录添加到 sys.path
     if base_dir not in sys.path:
         sys.path.append(base_dir)
-    app.run()
+    log.info("启动服务")
+    app.run(debug=True, use_reloader=False, threaded=True, host='0.0.0.0', port=5000)

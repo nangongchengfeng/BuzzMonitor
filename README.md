@@ -31,16 +31,59 @@
 
 ![1713940827150](images/1713940827150.png)
 
+## 定时任务
+
+爬虫是定时任务驱动，使用`apscheduler`
+
+```python
+    # 创建一个后台调度器
+    scheduler = BackgroundScheduler(timezone="Asia/Shanghai")
+    # 添加一个每隔20秒执行一次的定时任务 测试
+    scheduler.add_job(func=send_alert, trigger="interval", seconds=20)
+    # 添加一个每隔10分钟 执行的定时任务
+    scheduler.add_job(func=get_heimao, trigger=CronTrigger(minute='*/10'))
+    # 启动调度器
+    scheduler.start()
+    return app
+```
 
 
 
+## 发送钉钉告警
 
 
 
+![1713948266184](images/1713948266184.png)
 
 
 
+## 使用方式
+
+1、数据库创建数据库名称和执行命令
+
+![1713948625704](images/1713948625704.png)
+
+![1713948606922](images/1713948606922.png)
+
+```
+pip3 install Flask-Migrate
+
+初始化(只需要执行一次)
+flask db init
+生成文件
+flask db migrate
+迁移数据库
+flask db upgrade
+
+记得 （我已经导入）
+只需要在 app.py 中导入 models.py 中的类即可。
+而且导入全部和导入一个，结果都是可以对所有的表进行创建。
+```
 
 
+
+2、设置爬虫的信息
+
+![1713948491803](images/1713948491803.png)
 
  

@@ -19,6 +19,7 @@ from app.config import KEYWORDS
 from app.models.CatModel import CatModels
 from app.utils.LogHandler import log
 from app.utils.date_tool import getStrTime
+from app.utils.ding_send import Ding_Send_Url, sendDingMsg
 
 header = {
     # 'Referer': 'https://tousu.sina.com.cn/company/view/?couid=6330679669&sid=16754',
@@ -50,7 +51,7 @@ def resolve_dict(result, keyword):
                             'sn': main_data['sn'],
                             'source': '黑猫投诉',
                             'keyword': keyword,
-                            'url': 'https:' + str(main_data['url']),
+                            'url':  str(main_data['url']),
                             'title': title,
                             'content': content,
                             'complaint_claim': main_data['appeal'],
@@ -88,6 +89,10 @@ def resolve_dict(result, keyword):
                                 )
                                 db.session.add(new_complaint)
                                 db.session.commit()
+                                log.info('黑猫投诉数据已添加，id=%s', field.get('_id'))
+                                log.info("黑猫投诉数据：{}".format(new_complaint.to_json()))
+                                #发送钉钉告警消息
+                                sendDingMsg(Ding_Send_Url,new_complaint.to_json())
                             else:
                                 log.info('黑猫投诉数据已存在，id=%s', field.get('_id'))
                         data.append(field)
@@ -95,9 +100,6 @@ def resolve_dict(result, keyword):
                     log.exception(e)
                     continue
             log.info('黑猫解析后数据长度 len(data)=%s', len(data))
-            # ids = keep_data(data)
-            # print(ids)
-            # logger.info('黑猫投诉成功入库ids=%s', ids)
             print(data)
         else:
             log.exception('解析数据失败，errorCode=%s', (result['status']))
