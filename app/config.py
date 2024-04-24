@@ -8,6 +8,7 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+KEYWORDS = ['6330679669', '1004604']
 
 # base configuration
 class Config:
