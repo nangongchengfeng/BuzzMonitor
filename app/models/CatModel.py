@@ -4,13 +4,15 @@
 # @Email   : 1794748404@qq.com
 # @File    : CatModels.py
 # @Software: PyCharm
+import uuid
+
 from app.extension import db
 
 
 class CatModels(db.Model):
     __tablename__ = 'cat_info'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True)
     sn = db.Column(db.String(255))
     source = db.Column(db.String(255))
     keyword = db.Column(db.String(255))

@@ -9,10 +9,14 @@ import json
 import random
 import time
 import uuid
+from datetime import datetime
+
 import requests
 
 import app
+from app import db
 from app.config import KEYWORDS
+from app.models.CatModel import CatModels
 from app.utils.LogHandler import log
 from app.utils.date_tool import getStrTime
 
@@ -60,6 +64,32 @@ def resolve_dict(result, keyword):
                             'analy': '负面'
 
                         }
+                        from manage import app
+                        with app.app_context():
+                            # 检查数据库中是否已存在相同id的记录
+                            existing_complaint = db.session.query(CatModels).filter_by(sn=field['sn']).first()
+                            # 如果不存在，添加新记录
+                            if not existing_complaint:
+                                new_complaint = CatModels(
+                                    id=field['_id'],
+                                    sn=field['sn'],
+                                    source=field['source'],
+                                    keyword=field['keyword'],
+                                    url=field['url'],
+                                    title=field['title'],
+                                    content=field['content'],
+                                    complaint_claim=field['complaint_claim'],
+                                    complaint_obj=field['complaint_obj'],
+                                    author=field['author'],
+                                    exist_date=datetime.strptime(field['exist_date'], '%Y-%m-%d %H:%M:%S'),
+                                    time_stamp=field['time_stamp'],
+                                    query_date=datetime.strptime(field['query_date'], '%Y-%m-%d %H:%M:%S'),
+                                    analy=field['analy']
+                                )
+                                db.session.add(new_complaint)
+                                db.session.commit()
+                            else:
+                                log.info('黑猫投诉数据已存在，id=%s', field.get('_id'))
                         data.append(field)
                 except Exception as e:
                     log.exception(e)
