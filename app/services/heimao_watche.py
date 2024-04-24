@@ -43,6 +43,7 @@ def resolve_dict(result, keyword):
                     if title and content:
                         field = {
                             "_id": str(uuid.uuid1()),
+                            'sn': main_data['sn'],
                             'source': '黑猫投诉',
                             'keyword': keyword,
                             'url': 'https:' + str(main_data['url']),
@@ -67,7 +68,7 @@ def resolve_dict(result, keyword):
             # ids = keep_data(data)
             # print(ids)
             # logger.info('黑猫投诉成功入库ids=%s', ids)
-            # print(data)
+            print(data)
         else:
             log.exception('解析数据失败，errorCode=%s', (result['status']))
     except Exception as e:

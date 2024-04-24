@@ -4,6 +4,7 @@
 # @Email   : 1794748404@qq.com
 # @File    : extension.py.py
 # @Software: PyCharm
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()

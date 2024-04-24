@@ -7,12 +7,14 @@
 import os
 import sys
 
+
 from app import create_app
 
 # 默认为开发环境，按需求修改
 config_name = 'development'
 
 app = create_app(config_name)
+# 数据库迁移
 
 
 if __name__ == '__main__':

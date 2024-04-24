@@ -4,10 +4,15 @@
 # @Email   : 1794748404@qq.com
 # @File    : __init__.py.py
 # @Software: PyCharm
+from flask_migrate import Migrate
+
 from app.config import config
+from app.extension import db
+from app.models import CatModel
 
-
-def create_app(DevelopmentConfig):
+def create_app(DevelopmentConfig=None):
+    if DevelopmentConfig is None:
+        DevelopmentConfig = 'development'
     from flask import Flask
     from app.api import config_blueprint
     from app.extension import config_extensions
@@ -17,5 +22,5 @@ def create_app(DevelopmentConfig):
     app.config.from_object(config.get(DevelopmentConfig))
     config_blueprint(app)
     config_extensions(app)
-
+    migrate = Migrate(app, db)
     return app
