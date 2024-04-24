@@ -15,7 +15,6 @@ def create_app(DevelopmentConfig):
     app = Flask(__name__)
     # 加载配置项
     app.config.from_object(config.get(DevelopmentConfig))
-
     config_blueprint(app)
     config_extensions(app)
 

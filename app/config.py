@@ -20,7 +20,7 @@ class Config:
 
 # 开发环境
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost:3306/dev-database'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@192.168.102.20:3306/buzzmonitor'
 
 
 # 测试环境

@@ -6,9 +6,12 @@
 # @Software: PyCharm
 from flask import Blueprint
 
+from app.utils.LogHandler import log
+
 info=Blueprint('info',__name__)
 
 
 @info.route('/')
 def get_info():
+    log.info("加载配置项成功")
     return 'get_info'
