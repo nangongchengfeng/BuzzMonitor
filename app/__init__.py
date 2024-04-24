@@ -31,7 +31,7 @@ def create_app(DevelopmentConfig=None):
     # 创建一个后台调度器
     scheduler = BackgroundScheduler(timezone="Asia/Shanghai")
     # 添加一个每隔20秒执行一次的定时任务
-    scheduler.add_job(func=send_alert, trigger="interval", seconds=20)
+    # scheduler.add_job(func=send_alert, trigger="interval", seconds=20)
     # 添加一个每天早上9点执行的定时任务
     scheduler.add_job(func=get_heimao, trigger=CronTrigger(minute='*/10'))
     # 启动调度器

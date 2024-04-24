@@ -86,4 +86,15 @@ flask db upgrade
 
 ![1713948491803](images/1713948491803.png)
 
- 
+##  接口分页获取数据库内容
+
+```
+http://127.0.0.1:5000/info/
+
+
+        # 默认值
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 10))
+```
+
+![1713949999124](images/1713949999124.png)
