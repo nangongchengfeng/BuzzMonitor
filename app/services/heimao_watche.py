@@ -99,8 +99,7 @@ def resolve_dict(result, keyword):
                 except Exception as e:
                     log.exception(e)
                     continue
-            log.info('黑猫解析后数据长度 len(data)=%s', len(data))
-            print(data)
+            log.info('黑猫解析后数据长度 len(data)=%s %s', len(data), data)
         else:
             log.exception('解析数据失败，errorCode=%s', (result['status']))
     except Exception as e:

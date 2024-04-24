@@ -14,6 +14,7 @@ import urllib.parse
 import requests
 
 from app.config import Ding_URl, Ding_SCRET
+from app.utils.LogHandler import log
 
 
 def getDingTalkUrl(url, secret):
@@ -55,6 +56,7 @@ def sendDingMsg(url,msg):
     # 发送钉钉消息
     res = requests.post(url=url, data=json.dumps(data), headers=headers)
     print("#Send DingTalk robot res:" + str(res.text))
+    log.info(f"发送钉钉消息成功:{str(res.text)}")
 
 
 
