@@ -30,31 +30,52 @@ data = {
 
 if __name__ == '__main__':
 
+    # with app.app_context():
+    #     # 查询所有中间件数据
+    #     middlewares = CatModels.query.all()
+    #     # 将结果转换为字典列表（或其他您需要的格式）
+    #     # 检查数据库中是否已存在相同id的记录
+    #     existing_complaint = db.session.query(CatModels).filter_by(sn=data['sn']).first()
+    #     print(existing_complaint)
+    #     if not existing_complaint:
+    #         new_complaint = CatModels(
+    #             id=data['_id'],
+    #             sn=data['sn'],
+    #             source=data['source'],
+    #             keyword=data['keyword'],
+    #             url=data['url'],
+    #             title=data['title'],
+    #             content=data['content'],
+    #             complaint_claim=data['complaint_claim'],
+    #             complaint_obj=data['complaint_obj'],
+    #             author=data['author'],
+    #             exist_date=datetime.strptime(data['exist_date'], '%Y-%m-%d %H:%M:%S'),
+    #             time_stamp=data['time_stamp'],
+    #             query_date=datetime.strptime(data['query_date'], '%Y-%m-%d %H:%M:%S'),
+    #             analy=data['analy']
+    #         )
+    #         db.session.add(new_complaint)
+    #         db.session.commit()
+    #     else:
+    #         print("Record already exists and was not added.")
+
     with app.app_context():
-        # 查询所有中间件数据
-        middlewares = CatModels.query.all()
-        # 将结果转换为字典列表（或其他您需要的格式）
-        # 检查数据库中是否已存在相同id的记录
-        existing_complaint = db.session.query(CatModels).filter_by(id=data['_id']).first()
-        print(existing_complaint)
-        if not existing_complaint:
-            new_complaint = CatModels(
-                id=data['_id'],
-                sn=data['sn'],
-                source=data['source'],
-                keyword=data['keyword'],
-                url=data['url'],
-                title=data['title'],
-                content=data['content'],
-                complaint_claim=data['complaint_claim'],
-                complaint_obj=data['complaint_obj'],
-                author=data['author'],
-                exist_date=datetime.strptime(data['exist_date'], '%Y-%m-%d %H:%M:%S'),
-                time_stamp=data['time_stamp'],
-                query_date=datetime.strptime(data['query_date'], '%Y-%m-%d %H:%M:%S'),
-                analy=data['analy']
-            )
-            db.session.add(new_complaint)
-            db.session.commit()
-        else:
-            print("Record already exists and was not added.")
+        try:
+            # 默认值
+            page = 1
+            per_page = 10
+
+            # 分页查询
+            pagination = CatModels.query.paginate(page=page, per_page=per_page, error_out=False)
+            middlewares = pagination.items
+
+            # 构建响应数据
+            data = {
+                'data': [{'id': mw.id, 'content': mw.content} for mw in middlewares],
+                'total': pagination.total,
+                'pages': pagination.pages,
+                'current_page': pagination.page
+            }
+            print(data)
+        except Exception as e:
+            print(e)
