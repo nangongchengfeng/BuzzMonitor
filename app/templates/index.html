@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>投诉信息</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .complaint-item {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .complaint-item h2 {
+            margin-top: 0;
+        }
+
+        .complaint-item p {
+            margin-bottom: 10px;
+        }
+
+        .complaint-item .meta {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>投诉信息</h1>
+        {% for item in data.data %}
+        <div class="complaint-item">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+            <div class="meta">
+                <p>投诉来源: {{ item.source }}</p>
+                <p>关键词: {{ item.keyword }}</p>
+                <p>投诉对象: {{ item.complaint_obj }}</p>
+                <p>投诉要求: {{ item.complaint_claim }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
